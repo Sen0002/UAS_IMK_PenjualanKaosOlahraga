@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sportee - Toko Kaos Olahraga</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom CSS */
+        :root {
+            --primary: #333333;
+            --secondary: #555555;
+            --accent: #dc2626;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        .nav-link:hover {
+            color: var(--accent);
+            transition: all 0.3s ease;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+        
+        .cart-count {
+            top: -8px;
+            right: -8px;
+        }
+        
+        .notif {
+            animation: slideIn 0.5s forwards, fadeOut 0.5s 2.5s forwards;
+        }
+        
+        @keyframes slideIn {
+            from { right: -300px; opacity: 0; }
+            to { right: 20px; opacity: 1; }
+        }
+        
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; visibility: hidden; }
+        }
+    </style>
+</head>
+<body class="bg-gray-200">
+    <!-- Navigation Bar -->
+    <nav class="bg-black text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="index.html" class="text-2xl font-bold text-white">SPORT<span class="text-red-600">EE</span></a>
+                </div>
+                
+                <!-- Primary Nav -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="nav-link text-gray-300 hover:text-white font-medium">Home</a>
+                    
+                    <!-- Products Dropdown -->
+                    <div class="dropdown relative">
+                        <button class="nav-link text-gray-700 hover:text-blue-600 font-medium flex items-center">
+                            Produk <i class="fas fa-chevron-down ml-1 text-sm"></i>
+                        </button>
+                        <div class="dropdown-menu absolute hidden bg-white mt-2 py-2 w-40 shadow-lg rounded-md border border-gray-200">
+                            <a href="#pria" class="block px-4 py-2 hover:bg-gray-100">Pria</a>
+                            <a href="#wanita" class="block px-4 py-2 hover:bg-gray-100">Wanita</a>
+                        </div>
+                    </div>
+                    
+                    <a href="#about" class="nav-link text-gray-700 hover:text-blue-600 font-medium">Tentang Kami</a>
+                    <a href="#contact" class="nav-link text-gray-700 hover:text-blue-600 font-medium">Kontak</a>
+                </div>
+                
+                <!-- Login and Cart Icons -->
+                <div class="flex items-center space-x-4">
+                    <button id="loginButton" class="text-gray-700 hover:text-blue-600 font-medium hidden md:flex items-center">
+                        <i class="fas fa-user-circle mr-2"></i> Login
+                    </button>
+                    <button id="cartButton" class="relative p-2 rounded-full hover:bg-gray-800">
+                        <i class="fas fa-shopping-cart text-white text-xl"></i>
+                        <span id="cartCount" class="cart-count absolute bg-red-600 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                    </button>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuButton" class="md:hidden text-gray-700 p-2">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-white pb-4 px-4">
+            <a href="index.html" class="block py-2 text-gray-700 hover:text-blue-600">Home</a>
+            <button class="w-full flex justify-between items-center py-2 text-gray-700 hover:text-blue-600" id="mobileProductsButton">
+                Produk <i class="fas fa-chevron-down"></i>
+            </button>
+            <div id="mobileProductsMenu" class="hidden pl-4">
+                <a href="#pria" class="block py-2 text-gray-700 hover:text-blue-600">Pria</a>
+                <a href="#wanita" class="block py-2 text-gray-700 hover:text-blue-600">Wanita</a>
+            </div>
+            <a href="#about" class="block py-2 text-gray-700 hover:text-blue-600">Tentang Kami</a>
+            <a href="#contact" class="block py-2 text-gray-700 hover:text-blue-600">Kontak</a>
+            <button id="mobileLoginButton" class="w-full text-left py-2 text-gray-700 hover:text-blue-600">Login</button>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-r from-gray-900 to-gray-800 text-white py-20">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 mb-10 md:mb-0">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">Kaos Olahraga Berkualitas</h1>
+                <p class="text-xl mb-6">Didesain untuk kenyamanan dan performa maksimal saat berolahraga.</p>
+                <a href="#pria" class="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-medium inline-block">Belanja Sekarang</a>
+            </div>
+            <div class="md:w-1/2 flex justify-center">
+                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/2746d11e-54f8-408e-a5c8-8b26ee41c657.png" alt="Model pria dan wanita menggunakan kaos olahraga di gym dengan latar belakang modern" class="rounded-lg shadow-xl">
+            </div>
+        </div>
+    </section>
+    
+    <!-- Featured Products -->
+    <section id="pria" class="max-w-7xl mx-auto px-4 py-16">
+        <h2 class="text-3xl font-bold text-center mb-12">Koleksi Kaos Pria</h2>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+            <!-- Product 1 -->
+            <div class="product-card bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden transition duration-300 cursor-pointer" onclick="viewProductDetail('kaos-pria-sport-1')">
+                <div class="relative h-64 overflow-hidden">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/1020c6c0-f0df-44f2-918a-193686617c08.png" alt="Kaos olahraga pria warna hitam dengan garis biru di bagian lengan" class="w-full h-full object-cover">
+                    <div class="absolute top-2 right-2 bg-orange-500 text-white px-2 py-1 rounded text-xs font-bold">BARU</div>
+                </div>
+                <div class="p-4">
+                    <h3 class="font-bold text-lg mb-1">Sport Performance Black</h3>
+                    <p class="text-gray-600 mb-2">Kaos teknologi tinggi untuk latihan intensif</p>
+                    <div class="flex justify-between items-center">
+                        <span class="font-bold text-blue ×500">Rp 149.000</span>
+                        <button class="add-to-cart text-white bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded text-sm" data-id="1" data-name="Sport Performance Black" data-price="149000">+ Keranjang</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Product 2 -->
+            <div class="product-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300 cursor-pointer" onclick="viewProductDetail('kaos-pria-sport-2')">
+                <div class="relative h-64 overflow-hidden">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/3170c833-f7a5-48b7-bab6-c61a39cfd1cf.png" alt="Kaos olahraga pria warna biru navy dengan detail reflective untuk jogging malam" class="w-full h-full object-cover">
+                </div>
+                <div class="p-4">
+                    <h3 class="font-bold text-lg mb-1">Navy Run Master</h3>
+                    <p class="text-gray-600 mb-2">Kaos berlari dengan bahan cepat kering</p>
+                    <div class="flex justify-between items-center">
+                        <span class="font-bold text-blue-500">Rp 179.000</span>
+                        <button class="add-to-cart text-white bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded text-sm" data-id="2" data-name="Navy Run Master" data-price="179000">+ Keranjang</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Product 3 -->
+            <div class="product-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300 cursor-pointer" onclick="viewProductDetail('kaos-pria-sport-3')">
+                <div class="relative h-64 overflow-hidden">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/37fc7a03-bf54-47cf-bf96-0f0b7678524c.png" alt="Kaos olahraga pria warna abu-abu dengan ventilasi mesh di bagian samping" class="w-full h-full object-cover">
+                    <div class="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded text-xs font-bold">DISKON</div>
+                </div>
+                <div class="p-4">
+                    <h3 class="font-bold text-lg mb-1">Grey Crossfit Pro</h3>
+                    <p class="text-gray-600 mb-2">Desain aerodinamis untuk latihan crossfit</p>
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <span class="text-gray-400 line-through mr-2">Rp 199.000</span>
+                            <span class="font-bold text-blue-500">Rp 159.000</span>
+                        </div>
+                        <button class="add-to-cart text-white bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded text-sm" data-id="3" data-name="Grey Crossfit Pro" data-price="159000">+ Keranjang</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Product 4 -->
+            <div class="product-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300 cursor-pointer" onclick="viewProductDetail('kaos-pria-sport-4')">
+                <div class="relative h-64 overflow-hidden">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/99fb81dc-29bc-4432-ba6a-913e3f8630a2.png" alt="Kaos olahraga pria warna hijau army dengan teknologi UV protection" class="w-full h-full object-cover">
+                </div>
+                <div class="p-4">
+                    <h3 class="font-bold text-lg mb-1">Army Training Gear</h3>
+                    <p class="text-gray-600 mb-2">Bahan tahan lama untuk latihan outdoor</p>
+                    <div class="flex justify-between items-center">
+                        <span class="font-bold text-blue-500">Rp 169.000</span>
+                        <button class="add-to-cart text-white bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded text-sm" data-id="4" data-name="Army Training Gear" data-price="169000">+ Keranjang</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Women's Products -->
+    <section id="wanita" class="max-w-7xl mx-auto px-4 py-16 bg-gray-50">
+        <h2 class="text-3xl font-bold text-center mb-12">Koleksi Kaos Wanita</h2>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+            <!-- Product 1 -->
+            <div class="product-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300 cursor-pointer" onclick="viewProductDetail('kaos-wanita-sport-1')">
+                <div class="relative h-64 overflow-hidden">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/5edd5201-5b5f-45f8-936f-27f548bbb331.png" alt="Kaos olahraga wanita warna merah muda dengan detail mesh di bagian punggung" class="w-full h-full object-cover">
+                    <div class="absolute top-2 right-2 bg-orange-500 text-white px-2 py-1 rounded text-xs font-bold">TERLARIS</div>
+                </div>
+                <div class="p-4">
+                    <h3 class="font-bold text-lg mb-1">Pink Yoga Flex</h3>
+                    <p class="text-gray-600 mb-2">Kaos elastis untuk yoga dan pilates</p>
+                    <div class="flex justify-between items-center">
+                        <span class="font-bold text-blue-500">Rp 159.000</span>
+                        <button class="add-to-cart text-white bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded text-sm" data-id="5" data-name="Pink Yoga Flex" data-price="159000">+ Keranjang</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Product 2 -->
+            <div class="product-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300 cursor-pointer" onclick="viewProductDetail('kaos-wanita-sport-2')">
+                <div class="relative h-64 overflow-hidden">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/18efb4a8-359e-473e-8fd5-bdbe54236199.png" alt="Kaos olahraga wanita warna ungu dengan bahan cepat kering dan potongan slim fit" class="w-full h-full object-cover">
+                </div>
+                <div class="p-4">
+                    <h3 class="font-bold text-lg mb-1">Purple Active Fit</h3>
+                    <p class="text-gray-600 mb-2">Desain feminin untuk aktif sehari-hari</p>
+                    <div class="flex justify-between items-center">
+                        <span class="font-bold text-blue-500">Rp 139.000</span>
+                        <button class="add-to-cart text-white bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded text-sm" data-id="6" data-name="Purple Active Fit" data-price="139000">+ Keranjang</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Product 3 -->
+            <div class="product-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300 cursor-pointer" onclick="viewProductDetail('kaos-wanita-sport-3')">
+                <div class="relative h-64 overflow-hidden">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/32ae42dd-a7b2-4545-8cec-fe5799dc9236.png" alt="Kaos olahraga wanita warna hitam dengan detail reflective dan potongan crop" class="w-full h-full object-cover">
+                    <div class="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded text-xs font-bold">DISKON</div>
+                    
+                </div>
+                <div class="p-4">
+                    <h3 class="font-bold text-lg mb-1">Black Running Crop</h3>
+                    <p class="text-gray-600 mb-2">Kaos berlari dengan perlindungan UV</p>
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <span class="text-gray-400 line-through mr-2">Rp 189.000</span>
+                            <span class="font-bold text-blue-500">Rp 149.000</span>
+                        </div>
+                        <button class="add-to-cart text-white bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded text-sm" data-id="7" data-name="Black Running Crop" data-price="149000">+ Keranjang</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Product 4 -->
+            <div class="product-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300 cursor-pointer" onclick="viewProductDetail('kaos-wanita-sport-4')">
+                <div class="relative h-64 overflow-hidden">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/4ffa4110-3ac7-417c-b6e1-d823eb7a512d.png" alt="Kaos olahraga wanita warna hijau mint dengan detail mesh dan potongan racerback" class="w-full h-full object-cover">
+                </div>
+                <div class="p-4">
+                    <h3 class="font-bold text-lg mb-1">Mint Racerback</h3>
+                    <p class="text-gray-600 mb-2">Desain aerodinamis untuk latihan intensif</p>
+                    <div class="flex justify-between items-center">
+                        <span class="font-bold text-blue-500">Rp 169.000</span>
+                        <button class="add-to-cart text-white bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded text-sm" data-id="8" data-name="Mint Racerback" data-price="169000">+ Keranjang</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- About Section -->
+    <section id="about" class="max-w-7xl mx-auto px-4 py-16">
+        <div class="bg-white rounded-lg shadow-lg p-8">
+            <h2 class="text-3xl font-bold text-center mb-8">Tentang Sportee</h2>
+            <div class="flex flex-col md:flex-row items-center gap-8">
+                <div class="md:w-1/2">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/7c76c243-6ae4-4656-8784-de19e27caa32.png" alt="Tim Sportee sedang bekerja di kantor modern dengan tampilan produk" class="rounded-lg w-full">
+                </div>
+                <div class="md:w-1/2">
+                    <p class="text-gray-700 mb-4">Sportee adalah merek kaos olahraga premium yang berkomitmen untuk menghadirkan produk berkualitas tinggi dengan harga terjangkau. Setiap produk kami didesain oleh tim ahli dengan mempertimbangkan kebutuhan para atlet dan pecinta olahraga.</p>
+                    <p class="text-gray-700 mb-4">Kami menggunakan bahan-bahan terbaik yang nyaman dipakai, cepat kering, dan tahan lama. Desain kami tidak hanya stylish tetapi juga fungsional untuk berbagai jenis olahraga.</p>
+                    <p class="text-gray-700">Bergabunglah dengan ribuan pelanggan yang puas dengan produk Sportee dan rasakan perbedaannya!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section id="contact" class="max-w-7xl mx-auto px-4 py-16 bg-gray-50">
+        <h2 class="text-3xl font-bold text-center mb-8">Hubungi Kami</h2>
+        <div class="bg-white rounded-lg shadow-lg p-8 max-w-4xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Informasi Kontak</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-4 text-blue-600"></i>
+                            <div>
+                                <p class="font-medium">Alamat</p>
+                                <p class="text-gray-600">Jl. Olahraga No. 123, Jakarta Selatan</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-phone-alt mt-1 mr-4 text-blue-600"></i>
+                            <div>
+                                <p class="font-medium">Telepon</p>
+                                <p class="text-gray-600">(021) 1234-5678</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-envelope mt-1 mr-4 text-blue-600"></i>
+                            <div>
+                                <p class="font-medium">Email</p>
+                                <p class="text-gray-600">info@sportee.com</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-clock mt-1 mr-4 text-blue-600"></i>
+                            <div>
+                                <p class="font-medium">Jam Operasional</p>
+                                <p class="text-gray-600">Senin - Sabtu: 09.00 - 17.00</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Kirim Pesan</h3>
+                    <form class="space-y-4">
+                        <div>
+                            <label for="name" class="block text-gray-700 mb-1">Nama</label>
+                            <input type="text" id="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label for="email" class="block text-gray-700 mb-1">Email</label>
+                            <input type="email" id="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label for="subject" class="block text-gray-700 mb-1">Subjek</label>
+                            <input type="text" id="subject" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label for="message" class="block text-gray-700 mb-1">Pesan</label>
+                            <textarea id="message" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
+                        </div>
+                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium w-full">Kirim Pesan</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="bg-black text-white py-12">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Sportee</h3>
+                    <p class="text-gray-400">Toko kaos olahraga berkualitas tinggi dengan bahan terbaik untuk kenyamanan maksimal.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Tautan Cepat</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white">Home</a></li>
+                        <li><a href="#pria" class="text-gray-400 hover:text-white">Kaos Pria</a></li>
+                        <li><a href="#wanita" class="text-gray-400 hover:text-white">Kaos Wanita</a></li>
+                        <li><a href="#about" class="text-gray-400 hover:text-white">Tentang Kami</a></li>
+                        <li><a href="#contact" class="text-gray-400 hover:text-white">Kontak</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Bantuan</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Cara Pesan</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Pengembalian</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Ukuran</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">FAQ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Ikuti Kami</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-youtube text-xl"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>© 2023 Sportee. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Cart Sidebar -->
+    <div id="cartSidebar" class="fixed top-0 right-0 h-full w-full md:w-96 bg-white shadow-xl transform translate-x-full z-50 transition-transform duration-300 ease-in-out overflow-y-auto">
+        <div class="p-6">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold">Keranjang Belanja</h3>
+                <button id="closeCart" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div id="cartItems" class="space-y-4 mb-6">
+                <!-- Cart items will be added here -->
+                <div class="text-center text-gray-500 py-8">Keranjang Anda masih kosong</div>
+            </div>
+            
+            <div class="border-t border-gray-200 pt-4">
+                <div class="flex justify-between mb-2">
+                    <span class="text-gray-700">Subtotal</span>
+                    <span id="cartSubtotal" class="font-bold">Rp 0</span>
+                </div>
+                <div class="flex justify-between mb-4">
+                    <span class="text-gray-700">Ongkos Kirim</span>
+                    <span class="font-bold text-blue-600">GRATIS</span>
+                </div>
+                <div class="flex justify-between text-lg font-bold mb-6">
+                    <span>Total</span>
+                    <span id="cartTotal">Rp 0</span>
+                </div>
+                <button id="checkoutBtn" class="bg-blue-600 hover:bg-blue-700 text-white w-full py-3 rounded-lg font-medium">Checkout</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Notification -->
+    <div id="notification" class="fixed right-4 top-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg hidden z-50 notif">
+        <div class="flex items-center">
+            <i class="fas fa-check-circle mr-2"></i>
+            <span>Produk berhasil dibeli!</span>
+        </div>
+    </div>
+    
+    <!-- Product Detail Modal -->
+    <div id="productDetailModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-lg w-full max-w-3xl max-h-[90vh] overflow-auto">
+            <div class="p-6">
+                <div class="flex justify-between items-start mb-4">
+                    <h3 class="text-2xl font-bold" id="detailTitle">Product Detail</h3>
+                    <button id="closeDetailModal" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <div class="flex flex-col md:flex-row gap-6">
+                    <div class="md:w-1/2">
+                        <div class="bg-gray-100 rounded-lg overflow-hidden">
+                            <img id="detailImage" src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/6f635ddd-f722-4774-a9ef-a550aa5073a7.png" alt="Detail produk kaos olahraga" class="w-full h-auto">
+                        </div>
+                        <div class="flex gap-2 mt-4">
+                            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/6f635ddd-f722-4774-a9ef-a550aa5073a7.png" alt="Thumbnail 1" class="w-20 h-20 object-cover rounded cursor-pointer border-2 border-transparent hover:border-blue-500 thumbnail" data-src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/6f635ddd-f722-4774-a9ef-a550aa5073a7.png">
+                            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/5cffbc00-e272-435d-9315-79540dac6f7f.png" alt="Thumbnail 2" class="w-20 h-20 object-cover rounded cursor-pointer border-2 border-transparent hover:border-blue-500 thumbnail" data-src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/5cffbc00-e272-435d-9315-79540dac6f7f.png">
+                            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/e446180f-a005-43a3-8ab9-1c7d26f11817.png" alt="Thumbnail 3" class="w-20 h-20 object-cover rounded cursor-pointer border-2 border-transparent hover:border-blue-500 thumbnail" data-src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/e446180f-a005-43a3-8ab9-1c7d26f11817.png">
+                        </div>
+                    </div>
+                    <div class="md:w-1/2">
+                        <p class="text-gray-600 mb-4" id="detailDescription">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.</p>
+                        <div class="mb-4">
+                            <span class="text-xl font-bold text-blue-600" id="detailPrice">Rp 149.000</span>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <h4 class="font-bold mb-2">Ukuran</h4>
+                            <div class="flex space-x-2">
+                                <button class="border border-gray-300 px-4 py-1 rounded hover:bg-gray-100 focus:bg-blue-100 focus:border-blue-500">XS</button>
+                                <button class="border border-gray-300 px-4 py-1 rounded hover:bg-gray-100 focus:bg-blue-100 focus:border-blue-500">S</button>
+                                <button class="border border-gray-300 px-4 py-1 rounded hover:bg-gray-100 focus:bg-blue-100 focus:border-blue-500">M</button>
+                                <button class="border border-gray-300 px-4 py-1 rounded hover:bg-gray-100 focus:bg-blue-100 focus:border-blue-500">L</button>
+                                <button class="border border-gray-300 px-4 py-1 rounded hover:bg-gray-100 focus:bg-blue-100 focus:border-blue-500">XL</button>
+                            </div>
+                        </div>
+                        
+                        <button id="detailAddToCart" class="bg-blue-600 hover:bg-blue-700 text-white w-full py-2 rounded-lg font-medium mb-4">+ Keranjang</button>
+                        
+                        <div class="border-t border-gray-200 pt-4">
+                            <h4 class="font-bold mb-2">Detail Produk</h4>
+                            <ul class="text-gray-600 space-y-2">
+                                <li class="flex"><i class="fas fa-check text-green-500 mr-2 mt-1"></i> Bahan cepat kering</li>
+                                <li class="flex"><i class="fas fa-check text-green-500 mr-2 mt-1"></i> Perlindungan UV 50+</li>
+                                <li class="flex"><i class="fas fa-check text-green-500 mr-2 mt-1"></i> Antibakteri</li>
+                                <li class="flex"><i class="fas fa-check text-green-500 mr-2 mt-1"></i> Model slim fit</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Navigation Menu Toggle
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileProductsButton = document.getElementById('mobileProductsButton');
+        const mobileProductsMenu = document.getElementById('mobileProductsMenu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        mobileProductsButton.addEventListener('click', () => {
+            mobileProductsMenu.classList.toggle('hidden');
+        });
+        
+        // Cart Functionality
+        const cartButton = document.getElementById('cartButton');
+        const closeCart = document.getElementById('closeCart');
+        const cartSidebar = document.getElementById('cartSidebar');
+        const cartItems = document.getElementById('cartItems');
+        const cartCount = document.getElementById('cartCount');
+        const cartSubtotal = document.getElementById('cartSubtotal');
+        const cartTotal = document.getElementById('cartTotal');
+        const checkoutBtn = document.getElementById('checkoutBtn');
+        const notification = document.getElementById('notification');
+        const addToCartButtons = document.querySelectorAll('.add-to-cart');
+        
+        let cart = [];
+        
+        // Open/Close Cart
+        cartButton.addEventListener('click', () => {
+            cartSidebar.classList.remove('translate-x-full');
+            cartSidebar.classList.add('translate-x-0');
+        });
+        
+        closeCart.addEventListener('click', () => {
+            cartSidebar.classList.remove('translate-x-0');
+            cartSidebar.classList.add('translate-x-full');
+        });
+        
+        // Add to Cart Functionality
+        addToCartButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.stopPropagation();
+                
+                const id = button.getAttribute('data-id');
+                const name = button.getAttribute('data-name');
+                const price = parseInt(button.getAttribute('data-price'));
+                
+                // Check if item already exists in cart
+                const existingItem = cart.find(item => item.id === id);
+                
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    cart.push({
+                        id,
+                        name,
+                        price,
+                        quantity: 1
+                    });
+                }
+                
+                updateCartUI();
+                
+                // Show quick notification
+                setTimeout(() => {
+                    notification.classList.remove('hidden');
+                    setTimeout(() => {
+                        notification.classList.add('hidden');
+                    }, 3000);
+                }, 100);
+            });
+        });
+        
+        // Update Cart UI
+        function updateCartUI() {
+            // Update cart count
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            cartCount.textContent = totalItems;
+            cartCount.style.display = totalItems > 0 ? 'flex' : 'none';
+            
+            // Update cart items
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<div class="text-center text-gray-500 py-8">Keranjang Anda masih kosong</div>';
+            } else {
+                cartItems.innerHTML = cart.map(item => `
+                    <div class="flex justify-between items-start border-b border-gray-200 pb-4">
+                        <div class="flex-1">
+                            <h4 class="font-medium">${item.name}</h4>
+                            <div class="flex items-center mt-1">
+                                <button class="quantity-btn text-gray-500 hover:text-blue-600 w-6 h-6 flex items-center justify-center border rounded" data-id="${item.id}" data-action="decrease">
+                                    <i class="fas fa-minus text-xs"></i>
+                                </button>
+                                <span class="mx-2 w-8 text-center">${item.quantity}</span>
+                                <button class="quantity-btn text-gray-500 hover:text-blue-600 w-6 h-6 flex items-center justify-center border rounded" data-id="${item.id}" data-action="increase">
+                                    <i class="fas fa-plus text-xs"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="text-right ml-4">
+                            <div class="font-medium">Rp ${(item.price * item.quantity).toLocaleString('id-ID')}</div>
+                            <button class="text-red-500 hover:text-red-700 text-sm mt-1" data-id="${item.id}" data-action="remove">
+                                <i class="fas fa-trash mr-1"></i> Hapus
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+            
+            // Update totals
+            const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+            cartSubtotal.textContent = `Rp ${subtotal.toLocaleString('id-ID')}`;
+            cartTotal.textContent = `Rp ${subtotal.toLocaleString('id-ID')}`;
+            
+            // Add event listeners to quantity buttons
+            document.querySelectorAll('.quantity-btn').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const id = button.getAttribute('data-id');
+                    const action = button.getAttribute('data-action');
+                    
+                    const item = cart.find(item => item.id === id);
+                    
+                    if (action === 'increase') {
+                        item.quantity += 1;
+                    } else if (action === 'decrease' && item.quantity > 1) {
+                        item.quantity -= 1;
+                    }
+                    
+                    updateCartUI();
+                });
+            });
+            
+            // Add event listeners to remove buttons
+            document.querySelectorAll('[data-action="remove"]').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const id = button.getAttribute('data-id');
+                    cart = cart.filter(item => item.id !== id);
+                    updateCartUI();
+                });
+            });
+        }
+        
+        // Checkout Button
+        checkoutBtn.addEventListener('click', () => {
+            if (cart.length === 0) return;
+            
+            notification.querySelector('span').textContent = 'Pembelian berhasil! Terima kasih.';
+            notification.classList.remove('hidden');
+            
+            // Clear cart
+            cart = [];
+            updateCartUI();
+            
+            setTimeout(() => {
+                cartSidebar.classList.remove('translate-x-0');
+                cartSidebar.classList.add('translate-x-full');
+                
+                setTimeout(() => {
+                    notification.classList.add('hidden');
+                    
+                    // Reset notification message
+                    setTimeout(() => {
+                        notification.querySelector('span').textContent = 'Produk berhasil dibeli!';
+                    }, 500);
+                }, 2000);
+            }, 1000);
+        });
+        
+        // Product Detail Modal
+        const productDetailModal = document.getElementById('productDetailModal');
+        const closeDetailModal = document.getElementById('closeDetailModal');
+        const detailAddToCart = document.getElementById('detailAddToCart');
+        
+        function viewProductDetail(productId) {
+            // Here you would normally fetch product details from an API
+            // For demo purposes, we'll use hardcoded data based on the product ID
+            let product;
+            
+            if (productId === 'kaos-pria-sport-1') {
+                product = {
+                    title: 'Sport Performance Black',
+                    description: 'Kaos teknologi tinggi untuk latihan intensif. Dibuat dengan bahan moisture-wicking yang menjaga kulit tetap kering selama latihan. Dengan ventilasi strategis untuk sirkulasi udara optimal.',
+                    price: '149000',
+                    image: 'https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/8f8c2a35-4da0-401e-99e2-84606c43315d.png'
+                };
+            } else if (productId === 'kaos-pria-sport-2') {
+                product = {
+                    title: 'Navy Run Master',
+                    description: 'Kaos berlari dengan bahan cepat kering yang sempurna untuk jogging pagi atau marathon. Strip reflektif meningkatkan visibilitas saat olahraga malam hari.',
+                    price: '179000',
+                    image: 'https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/5cffbc00-e272-435d-9315-79540dac6f7f.png'
+                };
+            } else if (productId === 'kaos-pria-sport-3') {
+                product = {
+                    title: 'Grey Crossfit Pro',
+                    description: 'Kaos khusus untuk latihan crossfit dengan bahan stretchable dan ventilasi mesh di area samping. Desain aerodinamis mengurangi hambatan angin.',
+                    price: '159000',
+                    image: 'https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/e446180f-a005-43a3-8ab9-1c7d26f11817.png'
+                };
+            } else if (productId === 'kaos-pria-sport-4') {
+                product = {
+                    title: 'Army Training Gear',
+                    description: 'Kaos olahraga dengan bahan tahan lama khusus untuk latihan outdoor. Perlindungan UPF 50+ melindungi dari sinar matahari yang berbahaya.',
+                    price: '169000',
+                    image: 'https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/406cc7c8-a59f-4288-8876-897477a0285e.png'
+                };
+            } else if (productId === 'kaos-wanita-sport-1') {
+                product = {
+                    title: 'Pink Yoga Flex',
+                    description: 'Kaos elastis dengan bahan buttery-soft yang sempurna untuk yoga dan pilates. Desain tanpa jahitan untuk kenyamanan maksimal.',
+                    price: '159000',
+                    image: 'https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/7a0d7f6f-40cf-4b9a-baf8-d08f371af472.png'
+                };
+            } else if (productId === 'kaos-wanita-sport-2') {
+                product = {
+                    title: 'Purple Active Fit',
+                    description: 'Kaos sehari-hari dengan potongan slim fit yang stylish. Bahan ringan dan breathable untuk aktif seharian.',
+                    price: '139000',
+                    image: 'https://placehold.co/600x600'
+                };
+            } else if (productId === 'kaos-wanita-sport-3') {
+                product = {
+                    title: 'Black Running Crop',
+                    description: 'Kaos crop untuk berlari dengan teknologi pendinginan cepat. Desain racerback memberikan kebebasan gerak maksimal.',
+                    price: '149000',
+                    image: 'https://placehold.co/600x600'
+                };
+            } else if (productId === 'kaos-wanita-sport-4') {
+                product = {
+                    title: 'Mint Racerback',
+                    description: 'Kaos latihan high-performance dengan ventilasi mesh strategis untuk mengatur suhu tubuh selama latihan intensif.',
+                    price: '169000',
+                    image: 'https://placehold.co/600x600'
+                };
+            } else {
+                product = {
+                    title: 'Product Detail',
+                    description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.',
+                    price: '149000',
+                    image: 'https://placehold.co/600x600'
+                };
+            }
+            
+            // Update modal content
+            document.getElementById('detailTitle').textContent = product.title;
+            document.getElementById('detailDescription').textContent = product.description;
+            document.getElementById('detailPrice').textContent = `Rp ${parseInt(product.price).toLocaleString('id-ID')}`;
+            document.getElementById('detailImage').src = product.image;
+            document.getElementById('detailImage').alt = `Detail ${product.title}`;
+            
+            // Update thumbnails (example with 3 different angles for each product)
+            const thumbnails = document.querySelectorAll('.thumbnail');
+            if (productId === 'kaos-pria-sport-1') {
+                thumbnails[0].src = "https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/8f8c2a35-4da0-401e-99e2-84606c43315d.png";
+                thumbnails[1].src = "https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/5cffbc00-e272-435d-9315-79540dac6f7f.png";
+                thumbnails[2].src = "https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/e446180f-a005-43a3-8ab9-1c7d26f11817.png";
+            }
+            // Add similar conditions for other products...
+            
+            // Setup add to cart button in modal
+            detailAddToCart.onclick = () => {
+                // Find the corresponding product in cart or add new one
+                const existingItem = cart.find(item => item.name === product.title);
+                
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    cart.push({
+                        id: `detail-${Date.now()}`,
+                        name: product.title,
+                        price: parseInt(product.price),
+                        quantity: 1
+                    });
+                }
+                
+                updateCartUI();
+                notification.classList.remove('hidden');
+                
+                setTimeout(() => {
+                    notification.classList.add('hidden');
+                }, 3000);
+            };
+            
+            // Show modal
+            productDetailModal.classList.remove('hidden');
+        }
+        
+        closeDetailModal.addEventListener('click', () => {
+            productDetailModal.classList.add('hidden');
+        });
+        
+        // Close modal when clicking outside
+        productDetailModal.addEventListener('click', (e) => {
+            if (e.target === productDetailModal) {
+                productDetailModal.classList.add('hidden');
+            }
+        });
+        
+        // Prevent propagation when clicking inside modal content
+        document.querySelector('#productDetailModal > div').addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+
+        // Thumbnail click handler
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('thumbnail')) {
+                const mainImage = document.getElementById('detailImage');
+                mainImage.src = e.target.dataset.src;
+                mainImage.alt = e.target.alt;
+                
+                // Highlight selected thumbnail
+                document.querySelectorAll('.thumbnail').forEach(thumb => {
+                    thumb.classList.remove('border-blue-500');
+                    thumb.classList.add('border-transparent');
+                });
+                e.target.classList.add('border-blue-500');
+                e.target.classList.remove('border-transparent');
+            }
+        });
+
+        // Login Modal Functionality
+        const loginButton = document.getElementById('loginButton');
+        const mobileLoginButton = document.getElementById('mobileLoginButton');
+        const loginModal = document.getElementById('loginModal');
+        const closeLoginModal = document.getElementById('closeLoginModal');
+        
+        function toggleLoginModal() {
+            loginModal.classList.toggle('hidden');
+            mobileMenu.classList.add('hidden');
+        }
+        
+        loginButton.addEventListener('click', toggleLoginModal);
+        mobileLoginButton.addEventListener('click', toggleLoginModal);
+        closeLoginModal.addEventListener('click', toggleLoginModal);
+        
+        // Close modal when clicking outside
+        loginModal.addEventListener('click', (e) => {
+            if (e.target === loginModal) {
+                toggleLoginModal();
+            }
+        });
+        
+        // Prevent propagation when clicking inside modal content
+        document.querySelector('#loginModal > div').addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+        
+        // Form submission handlers
+        document.getElementById('loginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Login functionality would be implemented here');
+            toggleLoginModal();
+        });
+        
+        document.getElementById('registerForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Registration functionality would be implemented here');
+            toggleLoginModal();
+        });
+    </script>
+</body>
+</html>
+
